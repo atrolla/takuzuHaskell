@@ -23,12 +23,15 @@ solve :: Grid -> Grid
 solve = head . filter valid . combine . choices
 
 solve2 :: Grid -> Grid
-solve2 = head . checkvalid . combine2 . choices
+solve2 = head . checkvalid . combine2 . reattempt deduce . choices
 
 -- deduce
 
 deduce :: Matrix Choices -> Matrix Choices
-deduce = map fill
+deduce = transpose . map fill . transpose . map fill
+
+reattempt f x | f x == x  = x
+              | otherwise = reattempt f (f x)
 
 fill :: [Choices] -> [Choices]
 fill (x:y:z:xs)
@@ -37,6 +40,8 @@ fill (x:y:z:xs)
   | y == z && (not (isSingleton x)) && isSingleton y = fill ((inv z):z:z:xs)
   | otherwise = x:(fill (y:z:xs))
 fill l = l
+
+-- TODO : balance
 
 isSingleton :: Choices -> Bool
 isSingleton [_] = True

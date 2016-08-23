@@ -6,6 +6,7 @@ import System.TimeIt
 main :: IO()
 main = do
   timer takuzu
+  timer takuzu2
   
 timer tak = do
   putStrLn ("Takuzu to solve: " ++ show level)
@@ -13,8 +14,9 @@ timer tak = do
   timeIt $ putStrLn ("Result: " ++ show tak)
   putStrLn "End"
   
-level = medium
+level = veryeasy2
 takuzu = solve level
+takuzu2 = solve2 level
 
 veryeasy = [
   ['.','1','.','0'],
